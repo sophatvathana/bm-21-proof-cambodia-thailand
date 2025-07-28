@@ -80,15 +80,16 @@ y(t) = v₀ × sin(θ) × t - (1/2) × g × t²
 
 ## Coordinate References
 
-### Launch Point (Cambodia)
+### Launch Point (Cambodia) (Approximate)
 - **Latitude**: 14.355600°N
 - **Longitude**: 103.258600°E
 - **Source**: GPS coordinates, WGS84 datum
 
-### Target Point (Thailand)
-- **Latitude**: 15.119851°N  
-- **Longitude**: 104.320020°E
+### Target Point (Thailand) (Accurate)
+- **Latitude**: 14.6048725°N  
+- **Longitude**: 104.643772°E
 - **Source**: PTT Gas Station location, verified via satellite imagery
+- **Link**: https://maps.app.goo.gl/8MVJ35XcKw2hqKgu5
 
 ## Physical Constants
 

@@ -6,6 +6,11 @@ use std::fs;
 const WIDTH: i32 = 1920;
 const HEIGHT: i32 = 1080;
 
+const CAMBODIA_LAT: f64 = 14.3559; // Cambodia launch site
+const CAMBODIA_LON: f64 = 103.2586;
+const THAI_LAT: f64 = 14.6048725; // Target PTT in Thailand
+const THAI_LON: f64 = 104.643772;
+
 struct BM21Specs {
     max_range_45deg: f64,
     max_range_operational: f64,
@@ -45,12 +50,7 @@ fn haversine_distance(lat1: f64, lon1: f64, lat2: f64, lon2: f64) -> f64 {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let bm21_specs = BM21Specs::new();
 
-    let cambodia_lat = 14.3559; // Cambodia launch site
-    let cambodia_lon = 103.2586;
-    let thai_lat = 15.1198505; // Target PTT in Thailand
-    let thai_lon = 104.3200196;
-
-    let actual_distance = haversine_distance(cambodia_lat, cambodia_lon, thai_lat, thai_lon);
+    let actual_distance = haversine_distance(CAMBODIA_LAT, CAMBODIA_LON, THAI_LAT, THAI_LON);
 
     let g = 9.81;
     let v0 = 690.0; 
@@ -323,13 +323,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 false,
             ),
             (
-                format!("Given: φ₁={:.4}°, λ₁={:.4}°, φ₂={:.7}°, λ₂={:.7}°", cambodia_lat, cambodia_lon, thai_lat, thai_lon),
+                format!("Given: φ₁={:.4}°, λ₁={:.4}°, φ₂={:.7}°, λ₂={:.7}°", CAMBODIA_LAT, CAMBODIA_LON, THAI_LAT, THAI_LON),
                 13,
                 BLUE,
                 false,
             ),
             (
-                format!("Δφ = {:.4}°, Δλ = {:.4}°, R = 6,371km", thai_lat - cambodia_lat, thai_lon - cambodia_lon),
+                format!("Δφ = {:.4}°, Δλ = {:.4}°, R = 6,371km", THAI_LAT - CAMBODIA_LAT, THAI_LON - CAMBODIA_LON),
                 13,
                 BLUE,
                 false,
@@ -460,11 +460,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "GEOGRAPHIC DISTANCE VERIFICATION:".to_string(),
         format!(
             "* Launch Coordinates: {:.6}N, {:.6}E (Cambodia)",
-            cambodia_lat, cambodia_lon
+            CAMBODIA_LAT, CAMBODIA_LON
         ),
         format!(
             "* Target Coordinates: {:.6}N, {:.6}E (Thailand)",
-            thai_lat, thai_lon
+            THAI_LAT, THAI_LON
         ),
         format!("* Haversine Distance: {:.3} km", actual_distance / 1000.0),
         format!("* GPS Verification: CONFIRMED"),
