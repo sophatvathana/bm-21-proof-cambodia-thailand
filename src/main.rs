@@ -144,8 +144,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             ))?
             .label("Full Trajectory Path")
             .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 10, y)], BLUE.mix(0.3).stroke_width(2)));
-        
-        // Draw current animated trajectory (bright and thick)
+   
         let animation_progress = ((i + 1) as f64 / total_frames as f64 * trajectory_resolution as f64) as usize;
         let current_trajectory_km: Vec<(f64, f64)> = trajectory_points
             .iter()
@@ -157,8 +156,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .draw_series(LineSeries::new(current_trajectory_km, BLUE.stroke_width(6)))?
             .label("Active Trajectory")
             .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 10, y)], BLUE.stroke_width(6)));
-
-        // Convert operational range line to km
+ 
         let operational_range_line_km: Vec<(f64, f64)> = operational_range_line
             .iter()
             .map(|(x, y)| (*x / 1000.0, *y))
@@ -192,7 +190,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             chart
                 .draw_series(PointSeries::of_element(
                     vec![(x_km, y_km)],
-                    12, // Larger rocket marker
+                    12, 
                     &RED,
                     &|c, s, st| {
                         return EmptyElement::at(c) + Circle::new((0, 0), s, st.filled());
@@ -423,25 +421,24 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ];
 
         for (idx, (text, font_size, color, bold)) in compact_info.iter().enumerate() {
-            let y_pos = 38 + (idx as i32) * 30; // Increased spacing for 1080p
+            let y_pos = 38 + (idx as i32) * 30;  
             let font_style = if *bold {
                 TextStyle::from(
-                    ("Arial", (*font_size as f64 * 1.5) as i32) // Scale up fonts for 1080p
+                    ("Arial", (*font_size as f64 * 1.5) as i32)  
                         .into_font()
                         .style(FontStyle::Bold)
                         .color(color),
                 )
             } else {
-                TextStyle::from(("Arial", (*font_size as f64 * 1.5) as i32).into_font().style(FontStyle::Normal).color(color)) // Scale up fonts for 1080p
+                TextStyle::from(("Arial", (*font_size as f64 * 1.5) as i32).into_font().style(FontStyle::Normal).color(color))
             };
 
-            legend_area.draw_text(text, &font_style, (15, y_pos))?; // Adjusted margin for 1080p
+            legend_area.draw_text(text, &font_style, (15, y_pos))?;  
         }
 
         root.present()?;
     }
-
-    // Create comprehensive impossibility proof document
+ 
     let proof_lines = vec![
         "ANALYSIS: BM-21 from CAMBODIA vs THAILAND ATTACK CLAIM".to_string(),
         "================================================================".to_string(),
@@ -538,33 +535,30 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "IMPOSSIBILITY PROOF: CAMBODIA BM-21 CANNOT ATTACK THAILAND",
         core::Point::new(45, 60),
         imgproc::FONT_HERSHEY_SIMPLEX,
-        1.5, // Larger title font
+        1.5,  
         core::Scalar::new(255.0, 255.0, 255.0, 0.0),
-        4, // Thicker text
+        4,  
         imgproc::LINE_8,
         false,
     )?;
-
-    // Draw vertical separator line for two-column layout
+ 
     let center_x = WIDTH / 2;
     imgproc::line(
         &mut proof_img,
         core::Point::new(center_x, 100),
         core::Point::new(center_x, HEIGHT - 50),
-        core::Scalar::new(150.0, 150.0, 150.0, 0.0), // Gray line
-        3, // Line thickness
+        core::Scalar::new(150.0, 150.0, 150.0, 0.0), 
+        3, 
         imgproc::LINE_8,
         0,
     )?;
-
-    // Split proof_lines into two columns
+ 
     let mid_point = proof_lines.len() / 2;
     let left_column = &proof_lines[0..mid_point];
     let right_column = &proof_lines[mid_point..];
-
-    // Render left column
+ 
     for (i, text) in left_column.iter().enumerate() {
-        let y = 135 + (i as i32) * 35; // Adjusted spacing for two columns
+        let y = 135 + (i as i32) * 35;  
 
         if y > (HEIGHT - 50) {
             break;
@@ -572,23 +566,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         let (font_scale, color) =
             if text.starts_with("🚫") || text.contains("IMPOSSIBLE") || text.contains("FALSE") {
-                (0.8, core::Scalar::new(0.0, 0.0, 200.0, 0.0)) // Red
+                (0.8, core::Scalar::new(0.0, 0.0, 200.0, 0.0)) 
             } else if text.starts_with("🔬") || text.contains("COMPLETE") {
-                (0.8, core::Scalar::new(0.0, 150.0, 0.0, 0.0)) // Green
+                (0.8, core::Scalar::new(0.0, 150.0, 0.0, 0.0)) 
             } else if text.contains("SPECIFICATIONS") || text.contains("VERIFICATION") {
-                (0.7, core::Scalar::new(200.0, 0.0, 0.0, 0.0)) // Blue
+                (0.7, core::Scalar::new(200.0, 0.0, 0.0, 0.0))  
             } else if text.contains("═") {
-                (0.6, core::Scalar::new(100.0, 100.0, 100.0, 0.0)) // Gray
+                (0.6, core::Scalar::new(100.0, 100.0, 100.0, 0.0)) 
             } else if text.starts_with("•") {
-                (0.6, core::Scalar::new(0.0, 0.0, 0.0, 0.0)) // Black
+                (0.6, core::Scalar::new(0.0, 0.0, 0.0, 0.0)) 
             } else {
-                (0.7, core::Scalar::new(0.0, 0.0, 0.0, 0.0)) // Black
+                (0.7, core::Scalar::new(0.0, 0.0, 0.0, 0.0)) 
             };
 
         imgproc::put_text(
             &mut proof_img,
             text,
-            core::Point::new(30, y), // Left column position
+            core::Point::new(30, y),  
             imgproc::FONT_HERSHEY_SIMPLEX,
             font_scale,
             color,
